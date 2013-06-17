@@ -1,3 +1,5 @@
+-- stolen from here
+-- http://mobile.tutsplus.com/tutorials/corona/corona-sdk-game-development-path-finding/
 local Path = {}
 
 function Path:new()
