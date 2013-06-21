@@ -54,7 +54,7 @@ function BadGuy:new()
 	function bad:nextPath()
 		self.target = nil
 		local points = self.points
-		print("points are:", points)
+		-- print("points are:", points)
 		if points == nil then
 			local tileMap = self.tileMap
 			local TILE_WIDTH = tileMap.tileWidth
@@ -63,12 +63,12 @@ function BadGuy:new()
 			local foundMoves = myPath:findPath(tileMap.grid, self.startRow, self.startCol, 7, 7)
 			points = {}
 			local i
-			print("*** path ***")
+			-- print("*** path ***")
 			for i = 1, #foundMoves do
 				local pathItem = foundMoves[i]
 				local newX = pathItem.y * TILE_WIDTH - self.width / 2
 				local newY = pathItem.x * TILE_HEIGHT - self.height / 2
-				print("x: " .. pathItem.x .. ", y:", pathItem.y)
+				-- print("x: " .. pathItem.x .. ", y:", pathItem.y)
 				-- print(newX, newY)
 				table.insert(points, {x=newX, y=newY})
 			end
@@ -83,7 +83,7 @@ function BadGuy:new()
 		-- 	print("t:", t, ", points[t]:", points[t])
 		-- 	t = t + 1
 		-- end
-		print("next:", nextPoint.x, nextPoint.y)
+		-- print("next:", nextPoint.x, nextPoint.y)
 		self.target = nextPoint
 	end
 

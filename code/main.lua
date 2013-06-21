@@ -40,17 +40,7 @@ local BadGuy = require "BadGuy"
 local bad = BadGuy:new()
 bad:init(map, 1, 1)
 
-
--- animate = function(event)
--- 	-- path = CalcPath(CalcMoves(board, 1, 1, 10, 10))
--- 	for i = 1, table.getn(calculatedPath) do
--- 		local pathItem = calculatedPath[i]
--- 		local newX = pathItem.x * TILE_WIDTH
--- 		local newY = pathItem.y * TILE_HEIGHT
--- 		-- print("X: " .. newX .. "    Y: " .. newY)
--- 		local marker = display.newCircle((newX*32 - 16), (newY*32 - 16), 8)
--- 		local tile = Tile:new(stage, newX, newY, TILE_WIDTH, TILE_HEIGHT, pathItem.isObstacle)
--- 	end
--- end
-
--- animate()
+local BulletTower = require "BulletTower"
+tower = BulletTower:new()
+tower:init(map, 3, 3)
+tower.target = bad
