@@ -5,7 +5,7 @@ function BulletTower:new()
 	local tower = display.newGroup()
 	tower.target = nil
 	tower.fireTime = nil
-	tower.MAX_FIRE_TIME = 1 * 1000
+	tower.MAX_FIRE_TIME = 200 + math.floor((math.random() * 50))
 
 	function tower:init(tileMap, startRow, startCol)
 		gameLoop:addLoop(self)

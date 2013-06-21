@@ -2,7 +2,7 @@ local Bullet = {}
 
 function Bullet:new()
 	local bullet = display.newCircle(0, 0, 6)
-	bullet.speed = 0.3
+	bullet.speed = 0.4
 
 	function bullet:init(startX, startY, targetPoint)
 		gameLoop:addLoop(self)

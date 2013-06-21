@@ -41,6 +41,11 @@ local bad = BadGuy:new()
 bad:init(map, 1, 1)
 
 local BulletTower = require "BulletTower"
-tower = BulletTower:new()
-tower:init(map, 3, 3)
-tower.target = bad
+local makeTower = function(row, col)
+	local tower = BulletTower:new()
+	tower:init(map, row, col)
+	tower.target = bad
+end
+makeTower(3, 3)
+makeTower(4, 4)
+makeTower(5, 5)
