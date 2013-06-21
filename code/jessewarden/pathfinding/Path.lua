@@ -5,6 +5,22 @@ local Path = {}
 function Path:new()
 	local path = {}
 
+	function path:findPath(board, startX, startY, targetX, targetY)
+		assert(board ~= nil, "Board cannot be nil.")
+		assert(startX ~= nil, "startX cannot be nil.")
+		assert(startY ~= nil, "startY cannot be nil.")
+		assert(targetX ~= nil, "targetX cannot be nil.")
+		assert(targetY ~= nil, "targetY cannot be nil.")
+		print(startX, startY, targetX, targetY)
+		
+		local foundMoves = self:calculateMoves(board, startX, startY, targetX, targetY)
+		assert(foundMoves ~= nil, "nil returned from calculateMoves")
+		local closedPath = self:calculatePath(foundMoves)
+
+		print("foundMoves:", foundMoves, ", closedPath:", closedPath)
+		return closedPath
+	end
+
 	function path:calculateMoves(board, startX, startY, targetX, targetY)
 		local openlist={}  --Possible Moves
 		local closedlist={}  --Checked Squares

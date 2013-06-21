@@ -4,6 +4,9 @@ local TileView = require "TileView"
 function TileMap:new(grid)
 	local map = display.newGroup()
 	map.grid = grid
+	map.tileWidth = 32
+	map.tileHeight = 32
+	map.tileHash = {}
 
 	function map:init()
 		local grid = self.grid
@@ -12,11 +15,16 @@ function TileMap:new(grid)
 		local r, c
 		local startX = 0
 		local startY = 0
+		local tileHash = self.tileHash
 		for r=1,ROWS do
 			local tileView
 			for c=1,COLS do
 				local tile = grid:getTile(r, c)
-				tileView = self:getTileView(tile)
+				
+				
+				tileView = self:createTileViewFromTile(tile)
+				tileHash[tostring(r) .. "-" .. tostring(c)] = tileView
+				self:insert(tileView)
 				tileView.x = startX
 				tileView.y = startY
 				startX = startX + tileView.width
@@ -26,7 +34,7 @@ function TileMap:new(grid)
 		end
 	end
 
-	function map:getTileView(tile)
+	function map:createTileViewFromTile(tile)
 		-- local rect = display.newRect(self, 0, 0, 32, 32)
 		-- rect:setReferencePoint(display.TopLeftReferencePoint)
 		-- rect.strokeWidth = 1
@@ -37,9 +45,14 @@ function TileMap:new(grid)
 		-- 	rect:setFillColor(0, 255, 0)
 		-- end
 		-- return rect
-		local rect = TileView:new(tile, self, 32, 32)
+		local rect = TileView:new(tile, self, self.tileWidth, self.tileHeight)
 		return rect
 	end
+
+	function map:getTileView(row, col)
+		return self.tileHash[tostring(row) .. "-" .. tostring(col)]
+	end
+
 
 	map:init()
 

@@ -1,5 +1,9 @@
 display.setStatusBar(display.HiddenStatusBar)
 
+local GameLoop = require "GameLoop"
+gameLoop = GameLoop:new()
+gameLoop:start()
+
 local ROWS = 7
 local COLS = 7
 local TILE_WIDTH = 32
@@ -16,15 +20,16 @@ myGrid:setTile(3, 3, someTile)
 
 
 local myPath = Path:new()
-local st = system.getTimer()
 local foundMoves = myPath:calculateMoves(myGrid, 1, 1, 10, 10)
 
-st = system.getTimer()
 local calculatedPath = myPath:calculatePath(foundMoves)
-print(system.getTimer() - st)
 
 local TileMap = require "TileMap"
 local map = TileMap:new(myGrid)
+
+local BadGuy = require "BadGuy"
+local bad = BadGuy:new()
+bad:init(map, 1, 1)
 
 
 -- animate = function(event)
