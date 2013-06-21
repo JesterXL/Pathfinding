@@ -63,10 +63,12 @@ function BadGuy:new()
 			local foundMoves = myPath:findPath(tileMap.grid, self.startRow, self.startCol, 7, 7)
 			points = {}
 			local i
+			print("*** path ***")
 			for i = 1, #foundMoves do
 				local pathItem = foundMoves[i]
-				local newX = pathItem.x * TILE_WIDTH - self.width / 2
-				local newY = pathItem.y * TILE_HEIGHT - self.height / 2
+				local newX = pathItem.y * TILE_WIDTH - self.width / 2
+				local newY = pathItem.x * TILE_HEIGHT - self.height / 2
+				print("x: " .. pathItem.x .. ", y:", pathItem.y)
 				-- print(newX, newY)
 				table.insert(points, {x=newX, y=newY})
 			end

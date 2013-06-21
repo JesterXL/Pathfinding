@@ -14,9 +14,18 @@ local Grid = require "jessewarden.pathfinding.Grid"
 local Path = require "jessewarden.pathfinding.Path"
 local Tile = require "Tile"
 local myGrid = Grid:new(ROWS, COLS)
-local someTile = myGrid:getTile(3, 3)
-someTile.isObstacle = true
-myGrid:setTile(3, 3, someTile)
+local setObstacle = function(row, col)
+	local someTile = myGrid:getTile(row, col)
+	someTile.isObstacle = true
+	myGrid:setTile(row, col, someTile)
+end
+setObstacle(1, 2)
+setObstacle(2, 2)
+setObstacle(3, 3)
+setObstacle(4, 4)
+setObstacle(5, 5)
+setObstacle(6, 6)
+
 
 
 local myPath = Path:new()
