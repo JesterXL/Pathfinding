@@ -18,12 +18,6 @@ local function setupPhysics()
 	-- physics.setPositionIterations( 10 )
 end
 
--- local ProgressBar = require "ProgressBar"
--- local bar = ProgressBar:new(mainGroup, 255, 0, 0, 0, 255, 0, 30, 6)
--- bar.x = 30
--- bar.y = 30
--- bar:setProgress(50, 100)
-
 setupGlobals()
 setupPhysics()
 require "LevelView"

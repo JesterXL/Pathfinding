@@ -1,9 +1,9 @@
-EventDispatcher = {}
+local EventDispatcher = {}
 
 function EventDispatcher:initialize(table)
 	table.dispatchEvent = EventDispatcher.dispatchEvent
 	table.addEventListener = EventDispatcher.addEventListener
-	table.dispatchEvent = EventDispatcher.dispatchEvent
+	table.removeEventListener = EventDispatcher.removeEventListener
 	table.hasEventListener = EventDispatcher.hasEventListener
 	table._listeners = {}
 	table._count = 0

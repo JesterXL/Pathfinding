@@ -3,10 +3,12 @@ local HealthPoints = {}
 
 function HealthPoints:new(startHealth, startMaxHealth)
 	local healthPoints = {}
+	healthPoints.classType = "HealthPoints"
 	healthPoints.health = startHealth
 	healthPoints.maxHealth = startMaxHealth
 	
 	EventDispatcher:initialize(healthPoints)
+	assert(healthPoints.removeEventListener ~= nil, "method isn't working")
 
 	function healthPoints:setHealth(value)
 		assert(value ~= nil, "value cannot be nil")

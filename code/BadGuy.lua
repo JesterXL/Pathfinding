@@ -18,12 +18,14 @@ function BadGuy:new(parentGroup)
 	bad.points = nil
 
 	bad.healthPoints = nil
+	bad.destroyed = false
 
 	function bad:init(tileMap, startRow, startCol)
 		gameLoop:addLoop(self)
 
 		local circle = display.newCircle(self, 0, 0, 15)
 		circle:setFillColor(0, 0, 255, 200)
+		self.circle = circle
 
 		local progressBar = ProgressBar:new(self, 255, 0, 0, 0, 255, 0, 30, 6)
 		self.progressBar = progressBar
@@ -42,20 +44,39 @@ function BadGuy:new(parentGroup)
 	
 		self:addEventListener("collision", self)
 
-		self.healthPoints = HealthPoints:new(100, 100)
+		self.healthPoints = HealthPoints:new(30, 30)
 		self.healthPoints:addEventListener("onHealthChanged", self)
 	end
 
 	function bad:onHealthChanged(event)
-		print("go")
 		self.progressBar:setProgress(self.healthPoints.health, self.healthPoints.maxHealth)
+		if self.healthPoints.health == 0 then
+			self:destroy()
+		end
 	end
 
 	function bad:destroy()
+
+		if self.destroyed == true then return true end
+
+		self.destroyed = true
+		self.isVisible = true
+		self.circle.isVisible = false
+		self.progressBar.isVisible = false
+
+		self.healthPoints:removeEventListener("onHealthChanged", self)
 		self:dispatchEvent({name="onDestroyed", target=self})
 		gameLoop:removeLoop(self)
 		self.target = nil
-		self:removeSelf()
+		local t = function()
+			local removed = physics.removeBody(bad)
+			if removed == true then
+				self:removeSelf()
+			else
+				timer.performWithDelay(500, t)
+			end
+		end
+		timer.performWithDelay(500, t)
 	end
 
 	function bad:tick(millisecondsPassed)
@@ -129,7 +150,6 @@ function BadGuy:new(parentGroup)
 		if event.other.classType == "Bullet" and event.phase == "began" and event.other.destroyed == false then
 			event.other:destroy()
 			self.healthPoints:reduceHealth(1)
-			print("sup")
 		end
 	end
 
