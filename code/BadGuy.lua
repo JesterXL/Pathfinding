@@ -1,13 +1,14 @@
 local BadGuy = {}
 local Path = require "jessewarden.pathfinding.Path"
+local ProgressBar = require "ProgressBar"
+local HealthPoints = require "HealthPoints"
 
 function BadGuy:new(parentGroup)
-	local bad = display.newCircle(0, 0, 15)
+	local bad = display.newGroup()
 	if parentGroup then
 		parentGroup:insert(bad)
 	end
-	
-	bad:setFillColor(0, 0, 255, 200)
+
 	bad.startRow = nil
 	bad.startCol = nil
 	bad.tileMap = nil
@@ -15,10 +16,20 @@ function BadGuy:new(parentGroup)
 	bad.target = nil
 	
 	bad.points = nil
-	
+
+	bad.healthPoints = nil
 
 	function bad:init(tileMap, startRow, startCol)
 		gameLoop:addLoop(self)
+
+		local circle = display.newCircle(self, 0, 0, 15)
+		circle:setFillColor(0, 0, 255, 200)
+
+		local progressBar = ProgressBar:new(self, 255, 0, 0, 0, 255, 0, 30, 6)
+		self.progressBar = progressBar
+		progressBar.x = -(progressBar.width / 2) + 1
+		progressBar.y = -26
+
 		self.tileMap = tileMap
 		self.startRow = startRow
 		self.startCol = startCol
@@ -26,6 +37,18 @@ function BadGuy:new(parentGroup)
 		self.x = tile.x
 		self.y = tile.y
 		self:nextPath()
+
+		physics.addBody(self, "dynamic", {density = 0.8, friction = 0.8, bounce = 0.2, isSensor = true, radius=15})
+	
+		self:addEventListener("collision", self)
+
+		self.healthPoints = HealthPoints:new(100, 100)
+		self.healthPoints:addEventListener("onHealthChanged", self)
+	end
+
+	function bad:onHealthChanged(event)
+		print("go")
+		self.progressBar:setProgress(self.healthPoints.health, self.healthPoints.maxHealth)
 	end
 
 	function bad:destroy()
@@ -100,6 +123,14 @@ function BadGuy:new(parentGroup)
 		-- end
 		-- print("next:", nextPoint.x, nextPoint.y)
 		self.target = nextPoint
+	end
+
+	function bad:collision(event)
+		if event.other.classType == "Bullet" and event.phase == "began" and event.other.destroyed == false then
+			event.other:destroy()
+			self.healthPoints:reduceHealth(1)
+			print("sup")
+		end
 	end
 
 	return bad
