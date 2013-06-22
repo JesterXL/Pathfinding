@@ -48,10 +48,11 @@ function BadGuy:new()
 			-- self.startRow = math.round(target.y / self.tileMap.tileHeight)
 			-- self.startCol = math.round(target.x / self.tileMap.tileWidth)
 			self.target = nil
-			local t = function()
-				bad:nextPath()
-			end
-			timer.performWithDelay( 100, t )
+			bad:nextPath()
+			-- local t = function()
+			-- 	bad:nextPath()
+			-- end
+			-- timer.performWithDelay( 100, t )
 		else
 			self.x = self.x - moveX
 			self.y = self.y - moveY
