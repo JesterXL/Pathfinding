@@ -12,7 +12,7 @@ function TileView:new(tile, parentGroup, tileWidth, tileHeight)
 		self:updateColor()
 
 		tile:addEventListener("isObstacleChanged", self)
-		self:addEventListener("touch", self)
+		-- self:addEventListener("touch", self)
 	end
 
 	function view:updateColor()

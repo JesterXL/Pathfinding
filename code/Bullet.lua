@@ -1,7 +1,11 @@
 local Bullet = {}
 
-function Bullet:new()
+function Bullet:new(parentGroup)
 	local bullet = display.newCircle(0, 0, 3)
+	if parentGroup then
+		parentGroup:insert(bullet)
+	end
+	
 	bullet.speed = 0.4
 
 	function bullet:init(startX, startY, targetPoint)

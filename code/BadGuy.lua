@@ -1,8 +1,12 @@
 local BadGuy = {}
 local Path = require "jessewarden.pathfinding.Path"
 
-function BadGuy:new()
+function BadGuy:new(parentGroup)
 	local bad = display.newCircle(0, 0, 15)
+	if parentGroup then
+		parentGroup:insert(bad)
+	end
+	
 	bad:setFillColor(0, 0, 255, 200)
 	bad.startRow = nil
 	bad.startCol = nil

@@ -1,8 +1,12 @@
 local BulletTower = {}
 local Bullet = require "Bullet"
 
-function BulletTower:new()
+function BulletTower:new(parentGroup)
 	local tower = display.newGroup()
+	if parentGroup then
+		parentGroup:insert(tower)
+	end
+	
 	tower.target = nil
 	tower.fireTime = nil
 	tower.MAX_FIRE_TIME = 200 + math.floor((math.random() * 50))
@@ -45,7 +49,7 @@ function BulletTower:new()
 		self.fireTime = self.fireTime + milliseconds
 		if self.fireTime >= self.MAX_FIRE_TIME then
 			self.fireTime = 0
-			local bullet = Bullet:new()
+			local bullet = Bullet:new(parentGroup)
 			bullet:init(self.x, self.y, self.target)
 		end
 	end

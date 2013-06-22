@@ -1,11 +1,14 @@
 local TileMap = {}
 local TileView = require "TileView"
 
-function TileMap:new(grid)
+function TileMap:new(parentGroup, grid, tileWidth, tileHeight)
 	local map = display.newGroup()
+	if parentGroup then
+		parentGroup:insert(map)
+	end
 	map.grid = grid
-	map.tileWidth = 32
-	map.tileHeight = 32
+	map.tileWidth = tileWidth
+	map.tileHeight = tileHeight
 	map.tileHash = {}
 
 	function map:init()
@@ -52,7 +55,6 @@ function TileMap:new(grid)
 	function map:getTileView(row, col)
 		return self.tileHash[tostring(row) .. "-" .. tostring(col)]
 	end
-
 
 	map:init()
 
