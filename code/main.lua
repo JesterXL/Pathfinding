@@ -44,7 +44,7 @@ local BulletTower = require "BulletTower"
 local makeTower = function(row, col)
 	local tower = BulletTower:new()
 	tower:init(map, row, col)
-	tower.target = bad
+	tower:setTarget(bad)
 end
 makeTower(3, 3)
 makeTower(4, 4)

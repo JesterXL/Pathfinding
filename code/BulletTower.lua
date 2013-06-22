@@ -50,6 +50,21 @@ function BulletTower:new()
 		end
 	end
 
+	function tower:setTarget(target)
+		if self.target then
+			self.target:removeEventListener("onDestroyed", self)
+			self.target = nil
+		end
+
+		self.target = target
+		if target then
+			target:addEventListener("onDestroyed", self)
+		end
+	end
+
+	function tower:onDestroyed()
+		self.target = nil
+	end
 
 	return tower
 end

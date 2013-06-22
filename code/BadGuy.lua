@@ -24,6 +24,13 @@ function BadGuy:new()
 		self:nextPath()
 	end
 
+	function bad:destroy()
+		self:dispatchEvent({name="onDestroyed", target=self})
+		gameLoop:removeLoop(self)
+		self.target = nil
+		self:removeSelf()
+	end
+
 	function bad:tick(millisecondsPassed)
 		local target = self.target
 		if target == nil then return true end
@@ -75,7 +82,10 @@ function BadGuy:new()
 			self.points = points
 		end
 
-		if #points < 1 then return true end
+		if #points < 1 then
+			self:destroy()
+			return true
+		end
 
 		local nextPoint = table.remove(points, 1)
 		-- local t = 1
