@@ -40,11 +40,12 @@ local BulletTower = require "BulletTower"
 local makeTower = function(row, col)
 	local tower = BulletTower:new(mainGroup)
 	tower:init(map, row, col)
-	tower:setTarget(bad)
+	-- tower:setTarget(bad)
 end
-makeTower(3, 3)
+-- makeTower(3, 3)
 makeTower(4, 4)
 makeTower(5, 5)
+makeTower(6, 6)
 
 -- function mainGroup:touch(event)
 -- 	local phase = event.phase

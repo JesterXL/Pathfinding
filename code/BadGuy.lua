@@ -5,6 +5,7 @@ local HealthPoints = require "HealthPoints"
 
 function BadGuy:new(parentGroup)
 	local bad = display.newGroup()
+	bad.classType = "BadGuy"
 	if parentGroup then
 		parentGroup:insert(bad)
 	end
@@ -12,7 +13,7 @@ function BadGuy:new(parentGroup)
 	bad.startRow = nil
 	bad.startCol = nil
 	bad.tileMap = nil
-	bad.speed = 0.1
+	bad.speed = 0.05
 	bad.target = nil
 	
 	bad.points = nil

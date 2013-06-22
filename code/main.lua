@@ -10,8 +10,8 @@ local function setupGlobals()
 end
 
 local function setupPhysics()
-	-- physics.setDrawMode("hybrid")
-	physics.setDrawMode("normal")
+	physics.setDrawMode("hybrid")
+	-- physics.setDrawMode("normal")
 	-- physics.setDrawMode("debug")
 	physics.start()
 	physics.setGravity(0, 0)
