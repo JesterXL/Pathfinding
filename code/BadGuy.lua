@@ -45,7 +45,8 @@ function BadGuy:new(parentGroup)
 	
 		self:addEventListener("collision", self)
 
-		self.healthPoints = HealthPoints:new(30, 30)
+		local HITPOINTS = 30
+		self.healthPoints = HealthPoints:new(HITPOINTS, HITPOINTS)
 		self.healthPoints:addEventListener("onHealthChanged", self)
 	end
 
@@ -66,9 +67,11 @@ function BadGuy:new(parentGroup)
 		self.progressBar.isVisible = false
 
 		self.healthPoints:removeEventListener("onHealthChanged", self)
-		self:dispatchEvent({name="onDestroyed", target=self})
 		gameLoop:removeLoop(self)
 		self.target = nil
+
+		self:dispatchEvent({name="onDestroyed", target=self})
+		
 		local t = function()
 			local removed = physics.removeBody(bad)
 			if removed == true then

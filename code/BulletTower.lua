@@ -28,7 +28,9 @@ function BulletTower:new(parentGroup)
 		self.x = tile.x + self.tileMap.tileWidth / 2 - 3
 		self.y = tile.y + self.tileMap.tileHeight / 2 - 3
 
-		local range = display.newCircle(self, 0, 0, 60)
+		local RADIUS = 60
+
+		local range = display.newCircle(self, 0, 0, RADIUS)
 		range:setFillColor(0, 0, 255, 90)
 		range.strokeWidth = 2
 		range:setStrokeColor(0, 0, 0, 180)
@@ -46,8 +48,8 @@ function BulletTower:new(parentGroup)
 			range.tweenID = transition.to(range, {time = 2000, alpha = 0, onComplete=function()range:fadeIn()end})
 		end
 		-- range:fadeIn()
-		physics.addBody(range, "static", {density = 1.0, friction = 0.3, bounce = 0.2, isSensor = true, radius=60})
-		range:addEventListener("collision", self)
+		physics.addBody(self, "static", {density = 1.0, friction = 0.3, bounce = 0.2, isSensor = true, radius=RADIUS})
+		self:addEventListener("collision", self)
 	end
 
 	function tower:tick(milliseconds)
@@ -87,11 +89,12 @@ function BulletTower:new(parentGroup)
 	end
 
 	function tower:collision(event)
-		print("collision, phase:", event.phase, ", other:", event.other.classType)
 		if self.target == nil then
 			if event.other.classType == "BadGuy" then
 				self:setTarget(event.other)
 			end
+		elseif event.phase == "ended" and event.other == self.target then
+			self:setTarget(nil)
 		end
 		return true
 	end

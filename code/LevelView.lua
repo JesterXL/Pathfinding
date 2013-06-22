@@ -32,9 +32,7 @@ setObstacle(6, 6)
 local TileMap = require "TileMap"
 local map = TileMap:new(mainGroup, myGrid, TILE_WIDTH, TILE_HEIGHT)
 
-local BadGuy = require "BadGuy"
-local bad = BadGuy:new(mainGroup)
-bad:init(map, 1, 1)
+
 
 local BulletTower = require "BulletTower"
 local makeTower = function(row, col)
@@ -46,6 +44,10 @@ end
 makeTower(4, 4)
 makeTower(5, 5)
 makeTower(6, 6)
+
+local BadGuy = require "BadGuy"
+local bad = BadGuy:new(mainGroup)
+bad:init(map, 1, 1)
 
 -- function mainGroup:touch(event)
 -- 	local phase = event.phase
